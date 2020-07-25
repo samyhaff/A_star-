@@ -50,6 +50,17 @@ class UserInterface():
                     self.initialized += 1
                     self.algorithm.update_end()
 
+    def drawNodes(self):
+        l = self.algorithm.nodes_list
+        s = self.algorithm.start
+        e = self.algorithm.end
+        for c in l:
+            pygame.draw.rect(self.window, (0, 0, 0), (c[0] * 20, c[1] * 20, 20, 20))
+        if self.initialized >= 1:
+            pygame.draw.rect(self.window, (0, 255, 0), (s[0] * 20, s[1] * 20, 20, 20))
+        if self.initialized == 2:
+            pygame.draw.rect(self.window, (255, 0, 0), (e[0] * 20, e[1] * 20, 20, 20))
+
     def render(self):
         self.window.fill((255, 255, 255))
         # draw grid
@@ -57,6 +68,7 @@ class UserInterface():
             # 20 cases 
             pygame.draw.line(self.window, (0, 0 ,0), (0, 20 * i), (600, 20 * i), 3)
             pygame.draw.line(self.window, (0, 0, 0), (20 * i, 0), (20 * i, 600), 3)
+        self.drawNodes()
         pygame.display.update()
 
     def run(self):
@@ -64,9 +76,6 @@ class UserInterface():
             self.processInput()
             self.render()
             self.clock.tick(60)
-            print(self.algorithm.nodes_list)
-            print(self.algorithm.start)
-            print(self.algorithm.end)
 
 user_interface = UserInterface()
 user_interface.run()
